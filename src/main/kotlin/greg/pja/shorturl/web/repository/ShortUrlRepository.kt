@@ -1,16 +1,17 @@
-package greg.pja.shorturl.repository
+package greg.pja.shorturl.web.repository
 
 import greg.pja.jooq.generated.Tables
 import greg.pja.jooq.generated.tables.records.ShortUrlRecord
-import greg.pja.shorturl.entity.ShortUrl
+import greg.pja.shorturl.web.entity.ShortUrl
 import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
 import java.time.OffsetDateTime.now
 
 interface ShortUrlRepository {
-    fun create(short: String, url: String): String
+    fun create(short: String, url: String): Boolean
     fun findByShort(short: String): ShortUrl?
     fun findByUrl(url: String): ShortUrl?
+    fun updateLastAccessedByShort(short: String)
 }
 
 @Repository
@@ -19,20 +20,18 @@ class ShortUrlRepositoryImpl(
 ) : ShortUrlRepository {
     private val table = Tables.SHORT_URL
 
-    override fun create(short: String, url: String): String {
-        return short.also {
-            dslContext.insertInto(table)
-                .set(
-                    ShortUrlRecord(
-                        short,
-                        url,
-                        now(),
-                        null
-                    )
-                ).execute()
-        }
+    override fun create(short: String, url: String): Boolean {
+        return dslContext.insertInto(table)
+            .set(
+                ShortUrlRecord(
+                    short,
+                    url,
+                    now(),
+                    null
+                )
+            ).onConflictDoNothing()
+            .execute() == 1
     }
-
     override fun findByShort(short: String): ShortUrl? {
         return dslContext.select()
             .from(table)
@@ -47,4 +46,9 @@ class ShortUrlRepositoryImpl(
             .fetchOneInto(ShortUrl::class.java)
     }
 
+    override fun updateLastAccessedByShort(short: String) {
+        dslContext.update(table)
+            .set(table.LAST_ACCESS, now())
+            .execute()
+    }
 }
