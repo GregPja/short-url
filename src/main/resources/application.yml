@@ -1,1 +1,4 @@
+spring:
+  flyway:
+    enabled: false # migrations done "manually"
 

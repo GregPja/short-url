@@ -50,7 +50,7 @@ flyway {
     user = "postgres"
     password = "example"
     baselineOnMigrate = true
-    locations = arrayOf("filesystem:src/main/resources/db/migration")
+    locations = arrayOf("filesystem:src/main/resources/db/migrations")
 }
 
 jooq {
