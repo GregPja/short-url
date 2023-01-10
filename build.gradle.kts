@@ -22,15 +22,20 @@ repositories {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-jooq")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
-    implementation("org.flywaydb:flyway-core:9.2.0")
+    implementation("org.flywaydb:flyway-core:9.10.2")
     implementation("org.postgresql:postgresql:42.5.1")
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
+    implementation("io.micrometer:micrometer-registry-prometheus")
     jooqGenerator("org.postgresql:postgresql")
+
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:4.1.0")
+
 }
 
 tasks.withType<KotlinCompile> {

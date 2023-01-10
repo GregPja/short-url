@@ -1,4 +1,4 @@
-package greg.pja.shorturl.entity
+package greg.pja.shorturl.web.entity
 
 import java.time.OffsetDateTime
 

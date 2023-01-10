@@ -2,3 +2,6 @@ spring:
   flyway:
     enabled: false # migrations done "manually"
 
+shortener-service:
+  min-length: 2
+  max-length: 16

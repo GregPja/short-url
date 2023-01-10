@@ -3,3 +3,7 @@ spring:
     url: jdbc:postgresql://localhost:5432/short-url
     username: postgres
     password: example
+
+shortener-service:
+  min-length: 2
+  max-length: 16
