@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 import java.lang.Integer.min
 
 interface ShortUrlService {
-    fun createShortUrl(url: String): String
+    fun createShortUrlOrGetExisting(url: String): String
     fun getUrl(short: String): String
 }
 
@@ -25,7 +25,7 @@ class ShortUrlServiceImpl(
         metrics.counter("short.url.size.$it.clash")
     }
 
-    override fun createShortUrl(url: String): String {
+    override fun createShortUrlOrGetExisting(url: String): String {
         // if we have it, we return it. It's ok if the creation of an url is "slower"
         return shortUrlRepository.findByUrl(url)?.short ?: let {
             val longestShortUrl = aliasGenerator.generate(url)

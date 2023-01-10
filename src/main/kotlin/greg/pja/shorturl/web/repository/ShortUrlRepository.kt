@@ -32,6 +32,7 @@ class ShortUrlRepositoryImpl(
             ).onConflictDoNothing()
             .execute() == 1
     }
+
     override fun findByShort(short: String): ShortUrl? {
         return dslContext.select()
             .from(table)

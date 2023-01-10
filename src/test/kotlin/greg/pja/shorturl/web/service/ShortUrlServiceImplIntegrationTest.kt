@@ -32,7 +32,7 @@ class ShortUrlServiceImplIntegrationTest @Autowired constructor(
 
     @Test
     fun `when no other url exist the short url is as long as the minimum`() {
-        val short = service.createShortUrl("nice-url")
+        val short = service.createShortUrlOrGetExisting("nice-url")
         assertThat(short.length, `is`(config.minLength))
     }
 
@@ -40,7 +40,7 @@ class ShortUrlServiceImplIntegrationTest @Autowired constructor(
     fun `when there is a clash shortest url is one character bigger`() {
         repository.create("c9", "something-something")
         // nice-url md5 is c9a... so I check that it's equals to c9 + a
-        val short = service.createShortUrl("nice-url")
+        val short = service.createShortUrlOrGetExisting("nice-url")
         assertThat(short, `is`("c9a"))
     }
 

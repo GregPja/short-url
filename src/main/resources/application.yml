@@ -4,4 +4,4 @@ spring:
 
 shortener-service:
   min-length: 2
-  max-length: 16
+  max-length: 9

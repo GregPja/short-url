@@ -1,6 +1,16 @@
 version: '3.9'
 
 services:
+  short-url:
+    build: .
+    deploy:
+      replicas: 1
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://short-url-db:5432/short-url"
+      SPRING_DATASOURCE_USERNAME: "postgres"
+      SPRING_DATASOURCE_PASSWORD: "example"
+    ports:
+      - "8080:8080"
   db:
     container_name: "short-url-db"
     image: postgres:12.3
